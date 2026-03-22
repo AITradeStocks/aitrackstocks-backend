@@ -1,25 +1,23 @@
 # AITrackStocks Backend
 
-Clean starter backend for GitHub + Railway deployment.
+AI-powered stock trading platform API.
 
-## Structure
+## Deploy to Railway
 
-- `src/index.ts` Express entrypoint
-- `src/routes/*` route placeholders
-- `prisma/schema.prisma` Prisma schema
-- `railway.json` Railway config
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template)
 
-## Quick start
+## API Endpoints
 
-1. Add environment variables in Railway:
-   - `DATABASE_URL`
-   - `JWT_SECRET`
-   - `OPENAI_API_KEY` (optional)
-   - `PORT` (Railway usually sets this automatically)
-
-2. Deploy from GitHub.
-
-3. Test:
-   - `/health`
-   - `/api/auth`
-   - `/api/market`
+- `GET /health` - Health check
+- `POST /api/auth/register` - Register user
+- `POST /api/auth/login` - Login user
+- `GET /api/market/quote/:symbol` - Get stock quote
+- `GET /api/market/search?q=AAPL` - Search stocks
+- `GET /api/market/movers` - Get market movers
+- `GET /api/portfolio` - Get portfolio
+- `GET /api/smart-money/trades` - Get congress trades
+- `GET /api/smart-money/leaderboard` - Get leaderboard
+- `GET /api/bots/strategies` - Get bot strategies
+- `POST /api/copilot/chat` - AI chat
+- `GET /api/signals` - Get trading signals
+- `GET /api/alerts` - Get alerts

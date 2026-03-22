@@ -114,10 +114,13 @@ app.get('/api/market/search', async (req, res) => {
       { symbol: 'META', name: 'Meta Platforms Inc.' },
       { symbol: 'NFLX', name: 'Netflix Inc.' }
     ];
-    const filtered = stocks.filter(s => 
-      s.symbol.toLowerCase().includes((q as string || '').toLowerCase()) ||
-      s.name.toLowerCase().includes((q as string || '').toLowerCase())
-    );
+
+const q = (req.query.q as string) || '';
+
+const filtered = stocks.filter(s =>
+  s.symbol.toLowerCase().includes(q.toLowerCase()) ||
+  s.name.toLowerCase().includes(q.toLowerCase())
+);
     res.json(filtered);
   }
 });

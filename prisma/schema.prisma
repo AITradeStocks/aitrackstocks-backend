@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(cuid())
+  email      String      @unique
+  password   String
+  name       String?
+  role       String      @default("user")
+  createdAt  DateTime    @default(now())
+  portfolios Portfolio[]
+  trades     Trade[]
+  alerts     Alert[]
+  botConfigs BotConfig[]
+
+  @@map("users")
+}
+
+model Portfolio {
+  id         String    @id @default(cuid())
+  userId     String
+  name       String
+  totalValue Decimal   @default(0)
+  holdings   Holding[]
+  user       User      @relation(fields: [userId], references: [id])
+
+  @@map("portfolios")
+}
+
+model Holding {
+  id          String    @id @default(cuid())
+  portfolioId String
+  symbol      String
+  quantity    Int
+  avgPrice    Decimal
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+
+  @@map("holdings")
+}
+
+model Trade {
+  id        String   @id @default(cuid())
+  userId    String
+  symbol    String
+  type      String
+  quantity  Int
+  price     Decimal
+  total     Decimal
+  timestamp DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("trades")
+}
+
+model Alert {
+  id        String   @id @default(cuid())
+  userId    String
+  symbol    String
+  type      String
+  condition String
+  value     Decimal
+  isActive  Boolean  @default(true)
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("alerts")
+}
+
+model BotConfig {
+  id       String  @id @default(cuid())
+  userId   String
+  name     String
+  strategy String
+  isActive Boolean @default(false)
+  config   Json
+  user     User    @relation(fields: [userId], references: [id])
+
+  @@map("bot_configs")
+}
